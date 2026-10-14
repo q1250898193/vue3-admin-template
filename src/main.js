@@ -8,6 +8,7 @@ import 'nprogress/nprogress.css'
 
 import App from './App.vue'
 import router from './router'
+import permissionDirective from './directives/permission'
 
 const app = createApp(App)
 
@@ -19,5 +20,6 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
 app.use(createPinia())
 app.use(router)
 app.use(ElementPlus, { locale: zhCn })
+app.use(permissionDirective)
 
 app.mount('#app')
