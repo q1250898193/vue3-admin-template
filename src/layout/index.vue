@@ -2,12 +2,16 @@
   <el-container class="layout">
     <el-aside width="200px" class="aside">
       <div class="logo">Admin</div>
-      <el-menu :default-active="$route.path" router>
-        <el-menu-item index="/home">
-          <el-icon><HomeFilled /></el-icon>
-          <span>首页</span>
-        </el-menu-item>
-      </el-menu>
+        <el-menu :default-active="$route.path" router>
+          <el-menu-item index="/home">
+            <el-icon><HomeFilled /></el-icon>
+            <span>首页</span>
+          </el-menu-item>
+          <el-menu-item index="/components">
+            <el-icon><Grid /></el-icon>
+            <span>组件演示</span>
+          </el-menu-item>
+        </el-menu>
     </el-aside>
 
     <el-container>

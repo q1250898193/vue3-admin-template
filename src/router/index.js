@@ -20,6 +20,12 @@ const staticRoutes = [
         name: 'Home',
         component: () => import('@/views/Home.vue'),
         meta: { title: '首页', requiresAuth: true }
+      },
+      {
+        path: 'components',
+        name: 'Components',
+        component: () => import('@/views/TableDemo.vue'),
+        meta: { title: '组件演示', requiresAuth: true }
       }
     ]
   },
