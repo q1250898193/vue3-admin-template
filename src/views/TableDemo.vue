@@ -1,23 +1,29 @@
 <template>
-  <el-card style="margin-bottom:16px;">
-    <template #header><span>搜索表单 SearchForm</span></template>
-    <search-form :fields="searchFields" @search="handleSearch" @reset="handleReset" />
-  </el-card>
+  <!-- 用 TablePage 一行组件搞定整个列表页 -->
+  <table-page
+    title="员工管理"
+    :search-fields="searchFields"
+    :columns="columns"
+    :data="tableData"
+    :loading="loading"
+    show-add
+    add-text="新增员工"
+    @search="handleSearch"
+    @add="handleAdd"
+  >
+    <!-- 自定义状态列 -->
+    <template #status="{ row }">
+      <status-tag :status="row.status" />
+    </template>
+    <!-- 操作列 -->
+    <template #action="{ row }">
+      <el-button link type="primary" size="small" @click="handleEdit(row)">编辑</el-button>
+      <el-button link type="danger" size="small">删除</el-button>
+    </template>
+  </table-page>
 
-  <el-card style="margin-bottom:16px;">
-    <template #header><span>可配置表格 ProTable + 状态标签 StatusTag</span></template>
-    <pro-table :columns="columns" :data="tableData" :loading="loading">
-      <template #status="{ row }">
-        <status-tag :status="row.status" />
-      </template>
-      <template #action="{ row }">
-        <el-button link type="primary" size="small">编辑</el-button>
-        <el-button link type="danger" size="small">删除</el-button>
-      </template>
-    </pro-table>
-  </el-card>
-
-  <el-row :gutter="16">
+  <!-- 其他组件演示 -->
+  <el-row :gutter="16" style="margin-top:16px;">
     <el-col :span="12">
       <chart-card :option="chartOption" height="280px" />
     </el-col>
@@ -32,15 +38,13 @@
 
 <script setup>
 import { ref } from 'vue'
-import ProTable from '@/components/ProTable.vue'
-import SearchForm from '@/components/SearchForm.vue'
+import TablePage from '@/components/TablePage.vue'
+import StatusTag from '@/components/StatusTag.vue'
 import ChartCard from '@/components/ChartCard.vue'
 import UploadFile from '@/components/UploadFile.vue'
-import StatusTag from '@/components/StatusTag.vue'
 
 const loading = ref(false)
 
-// 搜索字段配置
 const searchFields = [
   { prop: 'name', label: '姓名', type: 'input' },
   {
@@ -50,8 +54,7 @@ const searchFields = [
       { label: '产品部', value: 'product' },
       { label: '运营部', value: 'operation' }
     ]
-  },
-  { prop: 'dateRange', label: '入职日期', type: 'daterange' }
+  }
 ]
 
 const columns = [
@@ -74,7 +77,6 @@ const tableData = ref(
   }))
 )
 
-// ECharts 演示
 const chartOption = {
   title: { text: '监测点趋势', left: 'center', textStyle: { fontSize: 14 } },
   tooltip: { trigger: 'axis' },
@@ -86,10 +88,7 @@ const chartOption = {
   ]
 }
 
-function handleSearch(params) {
-  console.log('搜索参数:', params)
-}
-function handleReset() {
-  console.log('重置')
-}
+function handleSearch(params) { console.log('搜索:', params) }
+function handleAdd() { console.log('新增') }
+function handleEdit(row) { console.log('编辑:', row) }
 </script>
